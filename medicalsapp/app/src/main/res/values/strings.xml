@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name" translatable="false">Medicals</string>
+    <string name="label_convenio">Informe o nome do convênio:</string>
+    <string name="label_especialidade">Informe a especialidade do profissional:</string>
+    <string name="botao_buscar">Buscar</string>
+    <string name="msg_erro">Convênio ou especialidade não cadastrados.</string>
+</resources>
