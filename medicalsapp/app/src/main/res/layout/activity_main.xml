@@ -10,37 +10,37 @@
 
     <TextView
         android:id="@+id/lblConvenio"
-        android:layout_width="390dp"
+        android:layout_width="match_parent"
         android:layout_height="30dp"
         android:text="@string/label_convenio" />
 
 
     <Spinner
         android:id="@+id/spConvenio"
-        android:layout_width="393dp"
+        android:layout_width="match_parent"
         android:layout_height="39dp" />
 
     <TextView
         android:id="@+id/lblEspecialidade"
-        android:layout_width="381dp"
+        android:layout_width="match_parent"
         android:layout_height="29dp"
         android:text="@string/label_especialidade" />
 
     <Spinner
         android:id="@+id/spEspecialidade"
-        android:layout_width="384dp"
+        android:layout_width="match_parent"
         android:layout_height="31dp" />
 
     <Button
         android:id="@+id/btnBuscar"
-        android:layout_width="375dp"
+        android:layout_width="match_parent"
         android:layout_height="45dp"
         android:onClick="buscar"
         android:text="@string/botao_buscar" />
 
     <TextView
         android:id="@+id/tvResultado"
-        android:layout_width="364dp"
+        android:layout_width="match_parent"
         android:layout_height="333dp" />
 
 </LinearLayout>

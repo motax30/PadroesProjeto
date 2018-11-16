@@ -2,8 +2,13 @@ package lab4.fatec.edu.br.medicals;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
+import android.widget.Scroller;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -58,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
                 finalResult.append(p.toString());
             }
             spResultado.setText(finalResult);
+            spResultado.setMovementMethod(new ScrollingMovementMethod());
         }else{
             spResultado.setText(R.string.msg_erro);
         }

@@ -43,7 +43,7 @@ public class Endereco {
                 "Rua: " + getRua()+ "\n" +
                 ", Numero: " + getNumero() +"\n" +
                 ", Bairro: " + getBairro() + "\n" +
-                ", Cidade: " + getCidade();
+                ", Cidade: " + getCidade()+ "\n\n";
     }
 
 

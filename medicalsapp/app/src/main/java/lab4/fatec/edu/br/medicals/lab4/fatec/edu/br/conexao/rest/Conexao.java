@@ -1,7 +1,12 @@
 package lab4.fatec.edu.br.medicals.lab4.fatec.edu.br.conexao.rest;
 
+import android.os.StrictMode;
+
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -11,6 +16,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -24,9 +30,10 @@ import lab4.fatec.edu.br.medicals.lab4.fatec.edu.br.medicals.entities.Profission
 public class Conexao {
     private static final String USER_AGENT = "Mozilla/5.0";
 
-
     // HTTP GET request
-    public static List<Convenio> getJSONFromAPI(String url) throws Exception {
+    public static String getJSONFromAPI(String url) throws Exception {
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
 
         URL obj = new URL(url);
         HttpURLConnection con = (HttpURLConnection) obj.openConnection();
@@ -51,126 +58,20 @@ public class Conexao {
         }
         in.close();
 
-        //System.out.println(response.toString());
-
-        List<Convenio> found = findAllItems(new JSONArray(response.toString()));
-
-        return found;
+        return response.toString();
     }
 
-    public static List<Convenio> findAllItems(JSONArray response){
+    public static List<Convenio> findAllItems(String json){
         List<Convenio> conveniosEncontrados = new LinkedList<>();
-
-        try {
-            for (int i = 0; i < response.length(); i++) {
-                JSONObject obj = response.getJSONObject(i);
-                Gson gs = new Gson();
-                conveniosEncontrados.add(gs.fromJson(obj.toString(),Convenio.class));
-            }
-
-        } catch (JSONException e) {
-            // handle exception
+        Gson gson = new GsonBuilder().create();
+        Type type = new TypeToken<List<Convenio>>(){}.getType();
+        List<Convenio> retornoJson = gson.fromJson(json,type);
+        for (Convenio c:retornoJson) {
+            Convenio c1 = new Convenio();
+            c1.setNome(c.getNome());
+            c1.setEspecialidades(c.getEspecialidades()!=null?c.getEspecialidades():null);
+            conveniosEncontrados.add(c1);
         }
         return conveniosEncontrados;
     }
-
-//    private static final String USER_AGENT = "Mozilla/5.0";
-//
-//    List<Convenio> conveniosCadastrados;
-//
-//    //Responsavel por carregar o Objeto JSON
-//    public static String getJSONFromAPI(String url){
-//        String retorno = "";
-//
-//        try {
-//            URL apiEnd = new URL(url);
-//            int codigoResposta;
-//            HttpURLConnection conexao;
-//            InputStream is;
-//
-//            conexao = (HttpURLConnection) apiEnd.openConnection();
-//            conexao.setRequestMethod("GET");
-//            conexao.setReadTimeout(15000);
-//            conexao.setConnectTimeout(15000);
-//            conexao.connect();
-//
-//            codigoResposta = conexao.getResponseCode();
-//            if(codigoResposta < HttpURLConnection.HTTP_BAD_REQUEST){
-//                is = conexao.getInputStream();
-//            }else{
-//                is = conexao.getErrorStream();
-//            }
-//
-//            retorno = converterInputStreamToString(is);
-//            is.close();
-//            conexao.disconnect();
-//
-//        } catch (MalformedURLException e) {
-//            e.printStackTrace();
-//        }catch (IOException e){
-//            e.printStackTrace();
-//        }
-//
-//        return retorno;
-//    }
-//
-//    private static String converterInputStreamToString(InputStream is){
-//        StringBuffer buffer = new StringBuffer();
-//        try{
-//            BufferedReader br;
-//            String linha;
-//
-//            br = new BufferedReader(new InputStreamReader(is));
-//            while((linha = br.readLine())!=null){
-//                buffer.append(linha);
-//            }
-//
-//            br.close();
-//        }catch(IOException e){
-//            e.printStackTrace();
-//        }
-//
-//        return buffer.toString();
-//    }
-//
-//    public static List<Convenio> findAllItems(JSONArray response){
-//        List<Convenio> conveniosEncontrados = new LinkedList<>();
-//
-//        try {
-//            for (int i = 0; i < response.length(); i++) {
-//                JSONObject obj = response.getJSONObject(i);
-//                Gson gs = new Gson();
-//                conveniosEncontrados.add(gs.fromJson(obj.toString(),Convenio.class));
-//            }
-//
-//        } catch (JSONException e) {
-//            // handle exception
-//        }
-//        return conveniosEncontrados;
-//    }
-//    public static List<Convenio> sendGet()throws  Exception{
-//
-//        String url = "https://localhost:8081/convenios";
-//        URL obj = new URL(url);
-//        HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-//        con.setRequestMethod("GET");
-//        con.setRequestProperty("User-Agent", USER_AGENT);
-////        int responseCode = con.getResponseCode();
-//        System.out.println("\nSending 'GET' request to URL : " + url);
-////        System.out.println("Response Code : " + responseCode);
-//        BufferedReader in = new BufferedReader(
-//                new InputStreamReader(con.getInputStream()));
-//        String inputLine;
-//        StringBuffer response = new StringBuffer();
-//
-//        while ((inputLine = in.readLine()) != null) {
-//            response.append(inputLine);
-//        }
-//        in.close();
-//
-//        List<Convenio> found = findAllItems(new JSONArray(response.toString()));
-//        return found;
-//    }
-
-
 }

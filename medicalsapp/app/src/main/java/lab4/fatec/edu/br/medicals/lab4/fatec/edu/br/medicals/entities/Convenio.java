@@ -8,7 +8,8 @@ public class Convenio {
     private Integer id;
     private String nome;
     private List<Especialidade> especialidades;
-    private List<Profissional> profissionais;
+
+    public Convenio() {}
 
     public Convenio(String nome) {
         this.nome = nome;

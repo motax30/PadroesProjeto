@@ -7,16 +7,12 @@ public class Profissional {
     private Long id;
     private Integer crm;
     private String nome;
-    private List<Especialidade> especialidades;
-    private List<Convenio> convenios;
     private Endereco endereco;
 
-    public Profissional(Integer crm, String nome, List<Especialidade> especialidades,List<Convenio> convenios, Endereco endereco) {
+    public Profissional(Integer crm, String nome,Endereco endereco) {
         setCrm(crm);
         setNome(nome);
         setEndereco(endereco);
-        setEspecialidades(especialidades);
-        setConvenios(convenios);
     }
 
     public static class Builder {
@@ -24,7 +20,6 @@ public class Profissional {
         private Integer crm;
         private String nome;
         private List<Especialidade> especialidades;
-        private List<Convenio> convenios;
         private Endereco endereco;
 
         public Builder(Integer crm, String nome){
@@ -48,7 +43,7 @@ public class Profissional {
         }
 
         public Profissional build(){
-            return new Profissional(crm,nome,especialidades,convenios,endereco);
+            return new Profissional(crm,nome,endereco);
         }
     }
 
@@ -79,22 +74,6 @@ public class Profissional {
     public Long getId() {return id;}
 
     public void setId(Long id) {this.id = id;}
-
-    public List<Especialidade> getEspecialidades() {
-        return especialidades;
-    }
-
-    public void setEspecialidades(List<Especialidade> especialidades) {
-        this.especialidades = especialidades;
-    }
-
-    public List<Convenio> getConvenios() {
-        return convenios;
-    }
-
-    public void setConvenios(List<Convenio> convenios) {
-        this.convenios = convenios;
-    }
 
     @Override
     public boolean equals(Object o) {

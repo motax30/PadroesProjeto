@@ -3,8 +3,11 @@ package lab4.fatec.edu.br.medicals.lab4.fatec.edu.br.medicals.entities;
 import org.json.JSONArray;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 import lab4.fatec.edu.br.medicals.lab4.fatec.edu.br.conexao.rest.Conexao;
 
@@ -12,8 +15,9 @@ public class ConvenioList {
     private List<Convenio> convenios = new LinkedList<>();
 
     public ConvenioList() throws Exception {
-        String url = "http://localhost:8081/convenios";
-        convenios = Conexao.findAllItems(new JSONArray(Conexao.getJSONFromAPI(url)));
+//        String url = "https://api.myjson.com/bins/13018y";
+        String url = "https://api.myjson.com/bins/1ae8ky";
+        convenios = Conexao.findAllItems(Conexao.getJSONFromAPI(url));
     }
 
     public void initializeConvenios(){
@@ -82,7 +86,9 @@ public class ConvenioList {
     public List<String>getTitulosConvenios(){
         List<String> titulosConvenios = new ArrayList<>();
         for (Convenio c:this.convenios) {
-            titulosConvenios.add(c.getNome());
+            if(!titulosConvenios.contains(c.getNome())){
+                titulosConvenios.add(c.getNome());
+            }
         }
         return titulosConvenios;
     }
@@ -91,7 +97,9 @@ public class ConvenioList {
         List<String> titulosEspecialidades = new ArrayList<>();
         for (Convenio c : this.convenios) {
             for (Especialidade esp : c.getEspecialidades()) {
-                titulosEspecialidades.add(esp.getNome());
+                if(!titulosEspecialidades.contains(esp.getNome())){
+                    titulosEspecialidades.add(esp.getNome());
+                }
             }
         }
         return titulosEspecialidades;
